@@ -35,6 +35,21 @@ app.get('/todos', (req, res) => {
   );
 });
 
+app.get('/todos/:id', (req, res) => {
+  var id = req.params.id;
+
+  Todo.findById(id)
+    .then(todo => {
+      if (!todo) {
+        return console.log('Id is not found.');
+      }
+      res.send({ todo });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
 app.listen(3000, () => {
   console.log('Started on port 3000');
 });
